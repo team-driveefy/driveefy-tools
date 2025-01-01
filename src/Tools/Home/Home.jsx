@@ -1,7 +1,6 @@
 import Tool_icon from "../../assets/icons/Tools.png"
 import { BarChart, Activity, Zap, Book } from 'lucide-react';
 import { Link } from "react-router-dom";
-import React from 'react'
 const Home = () => {
   return (
     <div className="flex min-h-screen p-6 gap-6">

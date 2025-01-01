@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Tabs, Tab, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { tableStyle } from '../../../Constant/tableStyle';
+import PropTypes from 'prop-types';
 
 const TicketTable = () => {
   const [value, setValue] = useState(0);
@@ -70,7 +71,7 @@ const TicketTable = () => {
   );
 };
 
-function TabPanel(props) {
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -88,6 +89,12 @@ function TabPanel(props) {
       )}
     </div>
   );
-}
+};
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  value: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default TicketTable;

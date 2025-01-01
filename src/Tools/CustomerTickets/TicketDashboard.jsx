@@ -1,11 +1,12 @@
-import TicketTable from "./components/TicketTable"
-import React from 'react'
+import TicketTable from "./components/TicketTable";
+
 const TicketDashboard = () => {
+
   return (
     <div>
       <TicketTable />
     </div>
-  )
-}
+  );
+};
 
-export default TicketDashboard
+export default TicketDashboard;
