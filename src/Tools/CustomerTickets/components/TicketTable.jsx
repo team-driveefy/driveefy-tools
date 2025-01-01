@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { Tabs, Tab, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { tableStyle } from '../../../Constant/tableStyle';
 import PropTypes from 'prop-types';
 
 const TicketTable = () => {
   const [value, setValue] = useState(0);
   
-  const { TableStyle, StyledTableCell, TableHeaderStyle } = tableStyle;
 
   const handleChange = (event, newValue) => {
     event.preventDefault();
@@ -14,7 +12,7 @@ const TicketTable = () => {
   };
 
   return (
-    <Box sx={{ width: '100%' }} style={TableStyle}>
+    <Box sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
         <Tab label="Unresolved Tickets" />
         <Tab label="Resolved Tickets" />
@@ -24,11 +22,11 @@ const TicketTable = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={TableHeaderStyle}>Name</TableCell>
-                <TableCell style={TableHeaderStyle}>Email</TableCell>
-                <TableCell style={TableHeaderStyle}>Phone No</TableCell>
-                <TableCell style={TableHeaderStyle}>Description</TableCell>
-                <TableCell style={TableHeaderStyle}>Action</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone No</TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -48,16 +46,16 @@ const TicketTable = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={TableHeaderStyle}>Name</TableCell>
-                <TableCell style={TableHeaderStyle}>Email</TableCell>
-                <TableCell style={TableHeaderStyle}>Phone No</TableCell>
-                <TableCell style={TableHeaderStyle}>Description</TableCell>
-                <TableCell style={TableHeaderStyle}>Action</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone No</TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <StyledTableCell>Cell 1</StyledTableCell>
+                <TableCell>Cell 1</TableCell>
                 <TableCell>Cell 2</TableCell>
                 <TableCell>Cell 3</TableCell>
                 <TableCell>Cell 4</TableCell>
