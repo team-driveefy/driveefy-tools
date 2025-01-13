@@ -4,9 +4,11 @@ import { Box, CircularProgress, Tabs, Tab, TableContainer, Paper, Table, TableHe
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { updateTicketStatus, getAllCustomerTickets } from '../../../actions/TicketDashboardActions';
 const TicketTable = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [value, setValue] = useState(0);
   const { allEmployees, loading } = useSelector((state) => state.TicketDashboard);
 
@@ -19,6 +21,18 @@ const TicketTable = () => {
     await dispatch(updateTicketStatus(ticket.uniqueId));
     dispatch(getAllCustomerTickets());
   };
+  
+  const truncateDescription = (description, maxLength) => {
+    if (description.length > maxLength) {
+      return description.substring(0, maxLength) + '...';
+    }
+    return description;
+  };
+
+  const handleRowClick = (ticketId) => {
+    navigate(`/CustomerTickets/${ticketId}`);
+  };
+
   
   const resolvedTickets = allEmployees.filter(employee => employee.isResolved);
   const unresolvedTickets = allEmployees.filter(employee => !employee.isResolved);
@@ -39,8 +53,8 @@ const TicketTable = () => {
             <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
                   <TableRow>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Sno.</TableCell>
-                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>First Name</TableCell>
-                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Last Name</TableCell>
+                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Name</TableCell>
+                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Customer ID</TableCell>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Email</TableCell>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Phone Number</TableCell>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Description</TableCell>
@@ -58,13 +72,13 @@ const TicketTable = () => {
                 </TableCell>
               </TableRow> 
                 : unresolvedTickets.map((ticket, index) => (
-                  <TableRow key={ticket.uniqueId}>
+                  <TableRow key={ticket.uniqueId} onClick={() => handleRowClick(ticket.uniqueId)} style={{ cursor: 'pointer' }}>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{ticket.firstName}</TableCell>
-                    <TableCell>{ticket.lastName}</TableCell>
+                    <TableCell>{ticket.firstName + ' ' + ticket.lastName}</TableCell>
+                    <TableCell>{truncateDescription(ticket.uniqueId, 8)}</TableCell>
                     <TableCell>{ticket.email}</TableCell>
                     <TableCell>{ticket.phoneNumber}</TableCell>
-                    <TableCell>{ticket.description}</TableCell>
+                    <TableCell>{truncateDescription(ticket.description, 20)}</TableCell>
                     <TableCell>
                     {ticket.mailSendStatus ? (
                           <CheckCircleIcon sx={{ color: 'green' }} />
@@ -73,7 +87,7 @@ const TicketTable = () => {
                     )}
                     </TableCell>
                     <TableCell>
-                      <Button variant="contained" color="primary" onClick={() => successfulClosureMail(ticket)}>Close Ticket</Button>
+                      <Button variant="contained" color="primary" onClick={(e) => {e.stopPropagation(); successfulClosureMail(ticket)}}>Close Ticket</Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -87,8 +101,8 @@ const TicketTable = () => {
             <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
                   <TableRow>
                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Sno.</TableCell>
-                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>First Name</TableCell>
-                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Last Name</TableCell>
+                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Name</TableCell>
+                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Customer ID</TableCell>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Email</TableCell>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Phone Number</TableCell>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Description</TableCell>
@@ -98,11 +112,11 @@ const TicketTable = () => {
                 {resolvedTickets.map((ticket, index) => (
                   <TableRow key={ticket.uniqueId}>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{ticket.firstName}</TableCell>
-                    <TableCell>{ticket.lastName}</TableCell>
+                    <TableCell>{ticket.firstName + ' ' + ticket.lastName}</TableCell>
+                    <TableCell>{truncateDescription(ticket.uniqueId, 8)}</TableCell>
                     <TableCell>{ticket.email}</TableCell>
                     <TableCell>{ticket.phoneNumber}</TableCell>
-                    <TableCell>{ticket.description}</TableCell>
+                    <TableCell>{truncateDescription(ticket.description, 20)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const getAllCustomerTickets = () => async (dispatch) => {
     try {
+        dispatch({type: "GET_USER_WITH_WILLS_REQUEST"});
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/panel/ticketlist`, {
             headers: {
                 "Content-type": "application/json",
@@ -23,6 +24,7 @@ export const getAllCustomerTickets = () => async (dispatch) => {
 
 export const updateTicketStatus = (ticketId) => async (dispatch) => {
     try {
+        dispatch({type: "GET_USER_WITH_WILLS_REQUEST"});
         const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/panel/ticketstatus/${ticketId}`,{},
         {
             headers: {
@@ -31,7 +33,7 @@ export const updateTicketStatus = (ticketId) => async (dispatch) => {
         });
 
         if(response.status===200){
-            dispatch({ type: 'UPDATE_TICKET_STATUS_SUCCESS', payload: response.data.data });
+            dispatch({ type: 'UPDATE_TICKET_STATUS_SUCCESS'});
         }
         
     } catch (error) {
